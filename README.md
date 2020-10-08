@@ -1,6 +1,6 @@
 # Tinder Backend
 
-An Tinder like app built on MongoDB and deployed to Heroku.
+A Tinder like app built on MongoDB and deployed to Heroku.
 
 ## Motivation
 
