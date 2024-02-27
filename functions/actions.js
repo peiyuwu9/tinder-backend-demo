@@ -1,5 +1,5 @@
 // DB config
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 const client = new MongoClient(process.env.DB_CONNECTION_URL);
 const db = client.db("tinder_demo");
 
@@ -12,5 +12,14 @@ export async function getUsers() {
 export async function getChats() {
   const chats = db.collection("chats");
   const data = await chats.find().toArray();
+  return data;
+}
+
+export async function starUser(id) {
+  const users = db.collection("users");
+  const data = await users.updateOne(
+    { _id: new ObjectId(id) },
+    { $set: { is_stared: true } }
+  );
   return data;
 }
