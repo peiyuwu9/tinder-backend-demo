@@ -15,6 +15,15 @@ export async function getChats() {
   return data;
 }
 
+export async function getChat(id) {
+  const chats = db.collection("chats");
+  const data = await chats.findOne(
+    { _id: new ObjectId(id) },
+    { projection: { name: true, img_url: true, conversation: true } }
+  );
+  return data;
+}
+
 export async function starUser(id) {
   const users = db.collection("users");
   const data = await users.updateOne(
