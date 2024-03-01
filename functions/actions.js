@@ -32,3 +32,23 @@ export async function starUser(id) {
   );
   return data;
 }
+
+export async function sendMsg(id, msg) {
+  const chats = db.collection("chats");
+  const data = await chats.findOne(
+    { _id: new ObjectId(id) },
+    { projection: { conversation: true } }
+  );
+  const conversation = [
+    ...data.conversation,
+    {
+      is_self: true,
+      msg,
+    },
+  ];
+  const newData = await chats.updateOne(
+    { _id: new ObjectId(id) },
+    { $set: { conversation } }
+  );
+  return newData;
+}

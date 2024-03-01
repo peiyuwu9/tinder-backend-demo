@@ -12,7 +12,7 @@ import express from "express";
 import "dotenv/config";
 import cors from "cors";
 
-import { getChat, getChats, getUsers, starUser } from "./actions.js";
+import { getChat, getChats, getUsers, sendMsg, starUser } from "./actions.js";
 
 const server = express();
 
@@ -54,6 +54,16 @@ server.get("/api/chat/:id", async (req, res) => {
 server.put("/api/user/:id/star", async (req, res) => {
   try {
     const user = await starUser(req.params.id);
+    return res.status(200).send(user);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send(err);
+  }
+});
+
+server.put("/api/chat/:id", async (req, res) => {
+  try {
+    const user = await sendMsg(req.params.id, JSON.parse(req.body));
     return res.status(200).send(user);
   } catch (err) {
     console.log(err);
